@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import Modal, { ModalProvider } from 'styled-react-modal';
 import { useState } from 'react';
-import { UNCATEGORIZED_BUDGET_ID, useBudgets } from './contexts/BudgetsContext';
-import AddBudgetModal from './components/AddBudgetModal';
-
-import setShowModal from './components/AddBudgetModal';
+import FocusLock from 'react-focus-lock';
 
 export const App = () => {
   const Container = styled.div``;
@@ -40,7 +38,7 @@ export const App = () => {
   `;
   const Card = styled.div`
     border-radius: 10px;
-    /* border-color: #fff; */
+    border-color: #fff;
     background-color: #fff;
     filter: drop-shadow(5px 5px 0.2rem #000);
 
@@ -48,7 +46,7 @@ export const App = () => {
   `;
   const CardTitle = styled.div`
     background-color: #444ddd;
-    color: #ff231f;
+    color: #fff;
     font-weight: bold;
     font-size: 1.5rem;
     padding: 0.5rem;
@@ -57,7 +55,44 @@ export const App = () => {
     padding: 0.5rem;
   `;
 
-  // const [showAddBudgetModal, setShowAddBudgetModal] = useState(false);
+  const StyledModal = Modal.styled`
+width: 20rem;
+height: 20rem;
+display: flex;
+align-items: center;
+justify-content: center;
+background-color: white;
+opacity: ${(props) => props.opacity};
+transition : all 0.3s ease-in-out;`;
+  const FancyModalButton = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleModal = (e) => {
+      setIsOpen(!isOpen);
+    };
+    return (
+      <>
+        <Button onClick={toggleModal}>Добавить группу хотелок</Button>
+        <Button onClick={toggleModal}>Добавить хотелку</Button>
+        <StyledModal
+          isOpen={isOpen}
+          onEscapeKeydown={toggleModal}
+          role="dialog"
+          aria-modal={true}
+          aria-labelledby="modal-label"
+        >
+          <FocusLock>
+            <p id="modal-label">I am an accessible modal!</p>
+            <Button onClick={toggleModal}>Close me</Button>
+          </FocusLock>
+        </StyledModal>
+      </>
+    );
+  };
+  const AddBudgetModal = () => {
+    return console.log(2 + 2);
+  };
+
   // const [showAddExpenseModal, setShowAddExpenseModal] = useState(false)
   // const [viewExpensesModalBudgetId, setViewExpensesModalBudgetId] = useState()
   // const [addExpenseModalBudgetId, setAddExpenseModalBudgetId] = useState()
@@ -72,10 +107,9 @@ export const App = () => {
         <Header>
           <Title>iWantTo</Title>
           <Menu>
-            <Button onClick={() => setShowModal((prev) => !prev)}>
-              Добавить группу хотелок
-            </Button>
-            <Button>Добавить хотелку</Button>
+            <ModalProvider>
+              <FancyModalButton />
+            </ModalProvider>
           </Menu>
         </Header>
         <div>
