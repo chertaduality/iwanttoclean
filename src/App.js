@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import Modal, { ModalProvider } from 'styled-react-modal';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import FocusLock from 'react-focus-lock';
+import PropTypes from 'prop-types';
+import ProgressBar from './components/Progress';
 
 export const App = () => {
   const Container = styled.div``;
@@ -18,9 +20,11 @@ export const App = () => {
     justify-content: start;
     font-size: 4rem;
     font-weight: bolder;
+    margin-left: 10%;
   `;
   const Menu = styled.div`
     justify-content: end;
+    margin-right: 10%;
   `;
   const Button = styled.button`
     border-radius: 10px;
@@ -32,16 +36,19 @@ export const App = () => {
   `;
   const Cards = styled.div`
     display: grid;
+    width: 80%;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1rem;
-    align-items: flex-start;
+    align-content: start;
+    /* border: 4px double black; */
+    margin-left: 10%;
   `;
   const Card = styled.div`
     border-radius: 10px;
     border-color: #fff;
     background-color: #fff;
     filter: drop-shadow(5px 5px 0.2rem #000);
-
+    padding: 1rem;
     margin: 1rem;
   `;
   const CardTitle = styled.div`
@@ -92,7 +99,20 @@ transition : all 0.3s ease-in-out;`;
   const AddBudgetModal = () => {
     return console.log(2 + 2);
   };
+  const [value, setValue] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setValue((oldValue) => {
+        const newValue = oldValue + 10;
 
+        if (newValue === 100) {
+          clearInterval(interval);
+        }
+
+        return newValue;
+      });
+    }, 1000);
+  }, []);
   // const [showAddExpenseModal, setShowAddExpenseModal] = useState(false)
   // const [viewExpensesModalBudgetId, setViewExpensesModalBudgetId] = useState()
   // const [addExpenseModalBudgetId, setAddExpenseModalBudgetId] = useState()
@@ -117,6 +137,12 @@ transition : all 0.3s ease-in-out;`;
             <Card>
               <CardTitle>Title</CardTitle>
               <CardContent>some content</CardContent>
+              <ProgressBar
+                color={'#ff7979'}
+                width={'150px'}
+                value={value}
+                max={100}
+              />
             </Card>
             <Card>
               <CardTitle>Title</CardTitle>
