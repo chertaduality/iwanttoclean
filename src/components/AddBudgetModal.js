@@ -5,17 +5,17 @@ import { Button } from './../App';
 import CloseModal from './CloseModal';
 
 export default function AddBudgetModal({ show, handleClose }) {
-  //   const nameRef = useRef();
-  //   const maxRef = useRef();
-  //   const { addBudget } = useBudgets();
-  //   const handleSubmit = (e) => {
-  //     e.preventDefault();
-  //     addBudget({
-  //       name: nameRef.current.value,
-  //       // max: parseFloat(maxRef.current.value),
-  //     });
-  //     handleClose();
-  //   };
+  const nameRef = useRef();
+  const maxRef = useRef();
+  const { addBudget } = useBudgets();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addBudget({
+      name: nameRef.current.value,
+      // max: parseFloat(maxRef.current.value),
+    });
+    handleClose();
+  };
   const [showModal, setShowModal] = useState(false);
   //   const Container = styled.div``;
   const Modal = styled.div`
@@ -35,8 +35,10 @@ export default function AddBudgetModal({ show, handleClose }) {
   return (
     <div>
       {showModal === true ? (
-        <Modal>
-          <CloseModal setShowModal={setShowModal} />
+        <Modal show={show} onHide={handleClose}>
+          <Form onSubmit={handleSubmit}>
+            <CloseModal setShowModal={setShowModal} />
+          </Form>
           <div>TEST</div>
           <Form>TEST</Form>
         </Modal>
