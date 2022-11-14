@@ -5,16 +5,18 @@ import { useState, useEffect } from 'react';
 import FocusLock from 'react-focus-lock';
 import PropTypes from 'prop-types';
 import ProgressBar from './components/Progress';
-
+import Card from './components/Card'
 export const App = () => {
   const Container = styled.div``;
   const Header = styled.div`
-    background-image: url(${'https://phonoteka.org/uploads/posts/2021-04/1618632243_19-phonoteka_org-p-sinii-fon-gradient-s-fioletovim-20.jpg'});
+    // background-image: url(${'https://phonoteka.org/uploads/posts/2021-04/1618632243_19-phonoteka_org-p-sinii-fon-gradient-s-fioletovim-20.jpg'});
+    background-color: #fff;
     height: 10rem;
-    color: #fff;
+    color: #4B0082;
     padding: 2rem;
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid #4B0082;
   `;
   const Title = styled.div`
     justify-content: start;
@@ -27,12 +29,18 @@ export const App = () => {
     margin-right: 10%;
   `;
   const Button = styled.button`
-    border-radius: 10px;
-    background-color: #fff;
-    font-weight: bolder;
-    border-style: none;
-    margin: 1rem;
-    height: 3rem;
+border-radius: 10px;
+background-color: #F0FFFF;
+font-weight: bolder;
+border-style: none;
+margin: 1rem;
+height: 3rem;
+border: 1px solid #1E90FF;
+&:hover {
+  color: #696969;
+  border: 1px solid #4682B4;
+  background-color: #fff;
+}
   `;
   const Cards = styled.div`
     display: grid;
@@ -43,24 +51,7 @@ export const App = () => {
     /* border: 4px double black; */
     margin-left: 10%;
   `;
-  const Card = styled.div`
-    border-radius: 10px;
-    border-color: #fff;
-    background-color: #fff;
-    filter: drop-shadow(5px 5px 0.2rem #000);
-    padding: 1rem;
-    margin: 1rem;
-  `;
-  const CardTitle = styled.div`
-    background-color: #444ddd;
-    color: #fff;
-    font-weight: bold;
-    font-size: 1.5rem;
-    padding: 0.5rem;
-  `;
-  const CardContent = styled.div`
-    padding: 0.5rem;
-  `;
+  
 
   const StyledModal = Modal.styled`
 width: 20rem;
@@ -134,44 +125,9 @@ transition : all 0.3s ease-in-out;`;
         </Header>
         <div>
           <Cards>
-            <Card>
-              <CardTitle>Title</CardTitle>
-              <CardContent>some content</CardContent>
-              <ProgressBar
-                color={'#ff7979'}
-                width={'150px'}
-                value={value}
-                max={100}
-              />
-            </Card>
-            <Card>
-              <CardTitle>Title</CardTitle>
-              <CardContent>some content</CardContent>
-            </Card>
-            <Card>
-              <CardTitle>Title</CardTitle>
-              <CardContent>some content</CardContent>
-            </Card>
-            <Card>
-              <CardTitle>Title</CardTitle>
-              <CardContent>some content</CardContent>
-            </Card>
-            <Card>
-              <CardTitle>Title</CardTitle>
-              <CardContent>some content</CardContent>
-            </Card>
-            <Card>
-              <CardTitle>Title</CardTitle>
-              <CardContent>some content</CardContent>
-            </Card>
-            <Card>
-              <CardTitle>Title</CardTitle>
-              <CardContent>some content</CardContent>
-            </Card>
-            <Card>
-              <CardTitle>Title</CardTitle>
-              <CardContent>some content</CardContent>
-            </Card>
+            <Card />
+            <Card />
+            <Card />
           </Cards>
         </div>
       </Container>
