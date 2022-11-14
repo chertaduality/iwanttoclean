@@ -1,22 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
-import Modal, { ModalProvider } from 'styled-react-modal';
+
 import { useState, useEffect } from 'react';
-import FocusLock from 'react-focus-lock';
-import PropTypes from 'prop-types';
-import ProgressBar from './components/Progress';
-import Card from './components/Card'
+import Card from './components/Card';
+import AddBudgetModal from './components/AddBudgetModal';
+// import { GlobalStyle } from './globalStyles';
+
 export const App = () => {
   const Container = styled.div``;
   const Header = styled.div`
     // background-image: url(${'https://phonoteka.org/uploads/posts/2021-04/1618632243_19-phonoteka_org-p-sinii-fon-gradient-s-fioletovim-20.jpg'});
     background-color: #fff;
     height: 10rem;
-    color: #4B0082;
+    color: #4b0082;
     padding: 2rem;
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #4B0082;
+    border-bottom: 1px solid #4b0082;
   `;
   const Title = styled.div`
     justify-content: start;
@@ -29,18 +29,18 @@ export const App = () => {
     margin-right: 10%;
   `;
   const Button = styled.button`
-border-radius: 10px;
-background-color: #F0FFFF;
-font-weight: bolder;
-border-style: none;
-margin: 1rem;
-height: 3rem;
-border: 1px solid #1E90FF;
-&:hover {
-  color: #696969;
-  border: 1px solid #4682B4;
-  background-color: #fff;
-}
+    border-radius: 10px;
+    background-color: #f0ffff;
+    font-weight: bolder;
+    border-style: none;
+    margin: 1rem;
+    height: 3rem;
+    border: 1px solid #1e90ff;
+    &:hover {
+      color: #696969;
+      border: 1px solid #4682b4;
+      background-color: #fff;
+    }
   `;
   const Cards = styled.div`
     display: grid;
@@ -48,86 +48,36 @@ border: 1px solid #1E90FF;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1rem;
     align-content: start;
-    /* border: 4px double black; */
     margin-left: 10%;
   `;
-  
 
-  const StyledModal = Modal.styled`
-width: 20rem;
-height: 20rem;
-display: flex;
-align-items: center;
-justify-content: center;
-background-color: white;
-opacity: ${(props) => props.opacity};
-transition : all 0.3s ease-in-out;`;
-  const FancyModalButton = () => {
-    const [isOpen, setIsOpen] = useState(false);
+  const [showAddBudgetModal, setShowAddBudgetModal] = useState(false);
 
-    const toggleModal = (e) => {
-      setIsOpen(!isOpen);
-    };
-    return (
-      <>
-        <Button onClick={toggleModal}>Добавить группу хотелок</Button>
-        <Button onClick={toggleModal}>Добавить хотелку</Button>
-        <StyledModal
-          isOpen={isOpen}
-          onEscapeKeydown={toggleModal}
-          role="dialog"
-          aria-modal={true}
-          aria-labelledby="modal-label"
-        >
-          <FocusLock>
-            <p id="modal-label">I am an accessible modal!</p>
-            <Button onClick={toggleModal}>Close me</Button>
-          </FocusLock>
-        </StyledModal>
-      </>
-    );
+  const openAddBudgetModal = () => {
+    setShowAddBudgetModal((prev) => !prev);
   };
-  const AddBudgetModal = () => {
-    return console.log(2 + 2);
-  };
-  const [value, setValue] = useState(0);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setValue((oldValue) => {
-        const newValue = oldValue + 10;
 
-        if (newValue === 100) {
-          clearInterval(interval);
-        }
-
-        return newValue;
-      });
-    }, 1000);
-  }, []);
-  // const [showAddExpenseModal, setShowAddExpenseModal] = useState(false)
-  // const [viewExpensesModalBudgetId, setViewExpensesModalBudgetId] = useState()
-  // const [addExpenseModalBudgetId, setAddExpenseModalBudgetId] = useState()
-  // const { budgets, getBudgetExpenses } = useBudgets();
-  // const openAddExpenseModal = (budgetId) => {
-  //   setShowAddExpenseModal(true)
-  //   setAddExpenseModalBudgetId(budgetId)
-  // }
   return (
     <>
       <Container>
         <Header>
           <Title>iWantTo</Title>
           <Menu>
-            <ModalProvider>
-              <FancyModalButton />
-            </ModalProvider>
+            <Button onClick={openAddBudgetModal}>Добавить группу</Button>
+            <AddBudgetModal
+              showAddBudgetModal={showAddBudgetModal}
+              setShowAddBudgetModal={setShowAddBudgetModal}
+            />
+            {/* <ModalProvider> */}
+            {/* <FancyModalButton /> */}
+            {/* </ModalProvider> */}
           </Menu>
         </Header>
         <div>
           <Cards>
+            {/* <Card />
             <Card />
-            <Card />
-            <Card />
+            <Card /> */}
           </Cards>
         </div>
       </Container>

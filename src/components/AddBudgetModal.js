@@ -1,78 +1,122 @@
-import { useRef, useState } from 'react';
-import { useBudgets } from '../contexts/BudgetsContext';
+import React, { useRef, useEffect, useCallback } from 'react';
+import { useSpring, animated } from 'react-spring';
 import styled from 'styled-components';
-import { Button } from './../App';
-import CloseModal from './CloseModal';
+// import { MdClose } from 'react-icons/md';
 
-export default function AddBudgetModal({ show, handleClose }) {
-  const nameRef = useRef();
-  const maxRef = useRef();
-  const { addBudget } = useBudgets();
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addBudget({
-      name: nameRef.current.value,
-      // max: parseFloat(maxRef.current.value),
-    });
-    handleClose();
+const Background = styled.div`
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalWrapper = styled.div`
+  width: 800px;
+  height: 500px;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  color: #000;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  z-index: 10;
+  border-radius: 10px;
+`;
+
+const ModalImg = styled.img`
+  width: 100%;
+  height: 100%;
+  border-radius: 10px 0 0 10px;
+  background: #000;
+`;
+
+const ModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.8;
+  color: #141414;
+  p {
+    margin-bottom: 1rem;
+  }
+  button {
+    padding: 10px 24px;
+    background: #141414;
+    color: #fff;
+    border: none;
+  }
+`;
+
+const CloseModalButton = styled.button`
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  z-index: 10;
+`;
+
+export default function AddBudgetModal({
+  showAddBudgetModal,
+  setShowAddBudgetModal,
+}) {
+  const showAddBudgetModalRef = useRef();
+
+  const animation = useSpring({
+    config: {
+      duration: 250,
+    },
+    opacity: showAddBudgetModal ? 1 : 0,
+    transform: showAddBudgetModal ? `translateY(0%)` : `translateY(-100%)`,
+  });
+
+  const closeAddBudgetModal = (e) => {
+    if (showAddBudgetModal.current === e.target) {
+      setShowAddBudgetModal(false);
+    }
   };
-  const [showModal, setShowModal] = useState(false);
-  //   const Container = styled.div``;
-  const Modal = styled.div`
-    padding: 4px;
-    display: flex;
-    flex-direction: row-reverse;
-    width: 80%;
-    height: 80vh;
-    border: 1px solid black;
-  `;
-  const Form = styled.form`
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-  `;
+
+  const keyPress = useCallback(
+    (e) => {
+      if (e.key === 'Escape' && showAddBudgetModal) {
+        setShowAddBudgetModal(false);
+        console.log('I pressed');
+      }
+    },
+    [setShowAddBudgetModal, showAddBudgetModal]
+  );
+
+  useEffect(() => {
+    document.addEventListener('keydown', keyPress);
+    return () => document.removeEventListener('keydown', keyPress);
+  }, [keyPress]);
 
   return (
-    <div>
-      {showModal === true ? (
-        <Modal show={show} onHide={handleClose}>
-          <Form onSubmit={handleSubmit}>
-            <CloseModal setShowModal={setShowModal} />
-          </Form>
-          <div>TEST</div>
-          <Form>TEST</Form>
-        </Modal>
-      ) : (
-        <>
-          <h4>Click the button to show the modal.</h4>
-          <button onClick={() => setShowModal((prev) => !prev)}>Show</button>
-        </>
-      )}
-
-      {/* <Modal.Header closeButton>
-    <Modal.Title>Новая група хотелок</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    <Form.Group className="mb-3" controlId="name">
-      <Form.Label>Название</Form.Label>
-      <Form.Control ref={nameRef} type="text" required />
-    </Form.Group>
-    <Form.Group className="mb-3" controlId="max">
-      <Form.Label>Расходы</Form.Label>
-      <Form.Control
-        ref={maxRef}
-        type="number"
-        required
-        min={0}
-        step={0.01}
-      />
-    </Form.Group>
-    <div className="d-flex justify-content-end">
-      <Button variant="primary" type="submit">
-        Добавить
-      </Button>
-    </div>
-  </Modal.Body> */}
-    </div>
+    <>
+      {showAddBudgetModal ? (
+        <Background onClick={closeAddBudgetModal} ref={showAddBudgetModalRef}>
+          <animated.div style={animation}>
+            <ModalWrapper showAddBudgetModal={showAddBudgetModal}>
+              <ModalImg alt="camera" />
+              <ModalContent>
+                <h1>Are you ready?</h1>
+                <p>Get exclusive access to our next launch.</p>
+                <button>Join Now</button>
+              </ModalContent>
+              <CloseModalButton
+                aria-label="Close modal"
+                onClick={() => setShowAddBudgetModal((prev) => !prev)}
+              />
+            </ModalWrapper>
+          </animated.div>
+        </Background>
+      ) : null}
+    </>
   );
 }
