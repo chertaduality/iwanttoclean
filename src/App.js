@@ -8,8 +8,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { createTheme } from '@mui/material/styles'
-
+import { createTheme } from '@mui/material/styles';
 
 export const App = () => {
   const style = {
@@ -23,7 +22,7 @@ export const App = () => {
     boxShadow: 24,
     p: 4,
   };
-  
+
   const Container = styled.div``;
   const Header = styled.div`
     // background-image: url(${'https://phonoteka.org/uploads/posts/2021-04/1618632243_19-phonoteka_org-p-sinii-fon-gradient-s-fioletovim-20.jpg'});
@@ -55,25 +54,22 @@ export const App = () => {
     margin-left: 10%;
   `;
 
-
   return (
     <>
       <Container>
         <Header>
           <Title>iWantTo</Title>
           <Menu>
-            <AddBudgetModal/>
-            <AddExpenseModal/>
+            <AddBudgetModal />
+            <AddExpenseModal />
           </Menu>
         </Header>
         <div>
           <Cards>
             <BudgetCard />
-        
           </Cards>
         </div>
       </Container>
-  
     </>
   );
 };

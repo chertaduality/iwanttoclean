@@ -10,65 +10,94 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { createStyles } from '@mui/material';
+import { makeStyles } from '@mui/material';
+import theme from './../App.js';
+import { ThemeProvider } from '@mui/material';
 
-export default function AddBudgetModal(){
+import { createTheme } from '@mui/material/styles';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
+export default function AddBudgetModal() {
+  // const classes = useStyles();
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+  const theme = createTheme({
+    palette: {
+      primary: {
+        light: '#8561c5',
+        main: '#673ab7',
+        dark: '#482880',
+        contrastText: '#fff',
+      },
+      secondary: {
+        light: '#f73378',
+        main: '#f50057',
+        dark: '#ab003c',
+        contrastText: '#fff',
+      },
+    },
+  });
+  const styles = createStyles({
+    button: {
+      marginBottom: '0.5rem',
+    },
+  });
 
+  const [openAddBudgetModal, setShowAddBudgetModal] = React.useState(false);
+  const handleOpenAddBudgetModal = () => setShowAddBudgetModal(true);
+  const handleCloseAddBudgetModal = () => setShowAddBudgetModal(false);
+  const [prio, setPrio] = React.useState('');
 
-};
-
-const styles = createStyles ({
-  button: {
-    marginBottom: '0.5rem'
-  }
-})
-
-const [openAddBudgetModal, setShowAddBudgetModal] = React.useState(false);
-const handleOpenAddBudgetModal = () => setShowAddBudgetModal(true);
-const handleCloseAddBudgetModal = () => setShowAddBudgetModal(false);
-const [prio, setPrio] = React.useState('');
-
-const handleChange = (event: SelectChangeEvent) => {
-  setPrio(event.target.value);
-};
+  const handleChange = (event: SelectChangeEvent) => {
+    setPrio(event.target.value);
+  };
 
   return (
     <div>
-      <Button onClick={handleOpenAddBudgetModal} variant="contained" sx={{ m: 0.8 }}color='secondary'>Добавить группу</Button>
-      <Modal
-        open={openAddBudgetModal}
-        onClose={handleCloseAddBudgetModal}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-        <FormGroup>
-        <Box
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 1, width: '25ch' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-   
-        </Box>
-        <Box sx={{ minWidth: 120 }}>
-        <FormControl fullWidth>
-        <TextField id="outlined-basic" label="Название группы" variant="outlined" margin="normal"/>
-      </FormControl>
-  
-      {/* <FormControl fullWidth>
+      <ThemeProvider theme={theme}>
+        <Button
+          onClick={handleOpenAddBudgetModal}
+          variant="contained"
+          sx={{ m: 0.8 }}
+          color="primary"
+        >
+          Добавить группу
+        </Button>
+        <Modal
+          open={openAddBudgetModal}
+          onClose={handleCloseAddBudgetModal}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <FormGroup>
+              <Box
+                component="form"
+                sx={{
+                  '& > :not(style)': { m: 1, width: '25ch' },
+                }}
+                noValidate
+                autoComplete="off"
+              ></Box>
+              <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                  <TextField
+                    id="outlined-basic"
+                    label="Название группы"
+                    variant="outlined"
+                    margin="normal"
+                  />
+                </FormControl>
+
+                {/* <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Выберите категорию</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -82,12 +111,18 @@ const handleChange = (event: SelectChangeEvent) => {
           <MenuItem value={30}>Thirty</MenuItem>
         </Select>
       </FormControl> */}
-    </Box>
-        </FormGroup>
-        <Button onClick={handleCloseAddBudgetModal} variant="contained" color='secondary'>Добавить</Button>
-        </Box>
-        
-      </Modal>
+              </Box>
+            </FormGroup>
+            <Button
+              onClick={handleCloseAddBudgetModal}
+              variant="contained"
+              color="secondary"
+            >
+              Добавить
+            </Button>
+          </Box>
+        </Modal>
+      </ThemeProvider>
     </div>
   );
 }
