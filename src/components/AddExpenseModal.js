@@ -9,9 +9,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { createStyles } from '@mui/material';
 
-export default function AddBudgetModal(){
+export default function AddExpenseModal(){
 
 const style = {
   position: 'absolute',
@@ -23,19 +22,11 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
-
-
 };
 
-const styles = createStyles ({
-  button: {
-    marginBottom: '0.5rem'
-  }
-})
-
-const [openAddBudgetModal, setShowAddBudgetModal] = React.useState(false);
-const handleOpenAddBudgetModal = () => setShowAddBudgetModal(true);
-const handleCloseAddBudgetModal = () => setShowAddBudgetModal(false);
+const [openAddExpenseModal, setShowAddExpenseModal] = React.useState(false);
+const handleOpenAddExpenseModal = () => setShowAddExpenseModal(true);
+const handleCloseAddExpenseModal = () => setShowAddExpenseModal(false);
 const [prio, setPrio] = React.useState('');
 
 const handleChange = (event: SelectChangeEvent) => {
@@ -44,10 +35,10 @@ const handleChange = (event: SelectChangeEvent) => {
 
   return (
     <div>
-      <Button onClick={handleOpenAddBudgetModal} variant="contained" sx={{ m: 0.8 }}color='secondary'>Добавить группу</Button>
+      <Button onClick={handleOpenAddExpenseModal} variant="outlined" color='secondary' margin="normal" sx={{ m: 0.8 }}>Добавить хотелку</Button>
       <Modal
-        open={openAddBudgetModal}
-        onClose={handleCloseAddBudgetModal}
+        open={openAddExpenseModal}
+        onClose={handleCloseAddExpenseModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -65,9 +56,23 @@ const handleChange = (event: SelectChangeEvent) => {
         </Box>
         <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
-        <TextField id="outlined-basic" label="Название группы" variant="outlined" margin="normal"/>
+        <TextField id="outlined-basic" label="Название хотелки" variant="outlined" margin="normal"/>
+        <TextField id="outlined-basic" label="Примерная стоимость" variant="outlined"  margin="normal"/>
       </FormControl>
-  
+      <FormControl fullWidth margin="normal">
+        <InputLabel id="demo-simple-select-label" >Выберите приоритет</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={prio}
+          label="prio"
+          onChange={handleChange}
+        >
+          <MenuItem value={'high'}>Высокий</MenuItem>
+          <MenuItem value={'medium'}>Средний</MenuItem>
+          <MenuItem value={'low'}>Низкий</MenuItem>
+        </Select>
+      </FormControl>
       {/* <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Выберите категорию</InputLabel>
         <Select
@@ -84,7 +89,7 @@ const handleChange = (event: SelectChangeEvent) => {
       </FormControl> */}
     </Box>
         </FormGroup>
-        <Button onClick={handleCloseAddBudgetModal} variant="contained" color='secondary'>Добавить</Button>
+        <Button onClick={handleCloseAddExpenseModal} variant="contained">Добавить</Button>
         </Box>
         
       </Modal>

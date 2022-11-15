@@ -1,12 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import { useState, useEffect } from 'react';
-import Card from './components/Card';
+import BudgetCard from './components/Card';
 import AddBudgetModal from './components/AddBudgetModal';
-// import { GlobalStyle } from './globalStyles';
+import AddExpenseModal from './components/AddExpenseModal';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import { createTheme } from '@mui/material/styles'
+
 
 export const App = () => {
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+  
   const Container = styled.div``;
   const Header = styled.div`
     // background-image: url(${'https://phonoteka.org/uploads/posts/2021-04/1618632243_19-phonoteka_org-p-sinii-fon-gradient-s-fioletovim-20.jpg'});
@@ -28,20 +45,7 @@ export const App = () => {
     justify-content: end;
     margin-right: 10%;
   `;
-  const Button = styled.button`
-    border-radius: 10px;
-    background-color: #f0ffff;
-    font-weight: bolder;
-    border-style: none;
-    margin: 1rem;
-    height: 3rem;
-    border: 1px solid #1e90ff;
-    &:hover {
-      color: #696969;
-      border: 1px solid #4682b4;
-      background-color: #fff;
-    }
-  `;
+
   const Cards = styled.div`
     display: grid;
     width: 80%;
@@ -51,11 +55,6 @@ export const App = () => {
     margin-left: 10%;
   `;
 
-  const [showAddBudgetModal, setShowAddBudgetModal] = useState(false);
-
-  const openAddBudgetModal = () => {
-    setShowAddBudgetModal((prev) => !prev);
-  };
 
   return (
     <>
@@ -63,28 +62,18 @@ export const App = () => {
         <Header>
           <Title>iWantTo</Title>
           <Menu>
-            <Button onClick={openAddBudgetModal}>Добавить группу</Button>
-            <AddBudgetModal
-              showAddBudgetModal={showAddBudgetModal}
-              setShowAddBudgetModal={setShowAddBudgetModal}
-            />
-            {/* <ModalProvider> */}
-            {/* <FancyModalButton /> */}
-            {/* </ModalProvider> */}
+            <AddBudgetModal/>
+            <AddExpenseModal/>
           </Menu>
         </Header>
         <div>
           <Cards>
-            {/* <Card />
-            <Card />
-            <Card /> */}
+            <BudgetCard />
+        
           </Cards>
         </div>
       </Container>
-      {/* <AddBudgetModal
-        show={showAddBudgetModal}
-        handleClose={() => setShowAddBudgetModal(false)}
-      /> */}
+  
     </>
   );
 };
