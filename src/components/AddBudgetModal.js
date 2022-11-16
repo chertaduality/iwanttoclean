@@ -13,10 +13,12 @@ import { createStyles } from '@mui/material';
 import { makeStyles } from '@mui/material';
 import theme from './../App.js';
 import { ThemeProvider } from '@mui/material';
+import { useRef } from 'react';
+import { useBudgets } from '../contexts/BudgetsContext';
 
 import { createTheme } from '@mui/material/styles';
 
-export default function AddBudgetModal() {
+export default function AddBudgetModal({ show, handleCloseAddBudgetModal }) {
   // const classes = useStyles();
   const style = {
     position: 'absolute',
@@ -51,14 +53,20 @@ export default function AddBudgetModal() {
     },
   });
 
+  const nameRef = useRef();
+  const maxRef = useRef();
+  const addBudget = useBudgets();
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    addBudget({
+      name: nameRef.current.value,
+    });
+    handleCloseAddBudgetModal();
+  }
+
   const [openAddBudgetModal, setShowAddBudgetModal] = React.useState(false);
   const handleOpenAddBudgetModal = () => setShowAddBudgetModal(true);
-  const handleCloseAddBudgetModal = () => setShowAddBudgetModal(false);
-  const [prio, setPrio] = React.useState('');
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setPrio(event.target.value);
-  };
 
   return (
     <div>
@@ -68,6 +76,7 @@ export default function AddBudgetModal() {
           variant="contained"
           sx={{ m: 0.8 }}
           color="primary"
+          show={show}
         >
           Добавить группу
         </Button>
@@ -78,7 +87,7 @@ export default function AddBudgetModal() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <FormGroup>
+            <FormGroup onSubmit={handleSubmit}>
               <Box
                 component="form"
                 sx={{
@@ -88,7 +97,7 @@ export default function AddBudgetModal() {
                 autoComplete="off"
               ></Box>
               <Box sx={{ minWidth: 120 }}>
-                <FormControl fullWidth>
+                <FormControl ref={nameRef} fullWidth>
                   <TextField
                     id="outlined-basic"
                     label="Название группы"
@@ -96,21 +105,6 @@ export default function AddBudgetModal() {
                     margin="normal"
                   />
                 </FormControl>
-
-                {/* <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Выберите категорию</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={age}
-          label="Age"
-          onChange={handleChange}
-        >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-      </FormControl> */}
               </Box>
             </FormGroup>
             <Button
