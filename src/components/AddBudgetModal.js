@@ -1,25 +1,15 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import FormGroup from '@mui/material/FormGroup';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { createStyles } from '@mui/material';
-import { makeStyles } from '@mui/material';
-import theme from './../App.js';
 import { ThemeProvider } from '@mui/material';
-import { useRef } from 'react';
-import { useBudgets } from '../contexts/BudgetsContext';
-
 import { createTheme } from '@mui/material/styles';
+import { useState } from 'react';
 
-export default function AddBudgetModal({ show, handleCloseAddBudgetModal }) {
-  // const classes = useStyles();
+export default function AddBudgetModal() {
   const style = {
     position: 'absolute',
     top: '50%',
@@ -47,27 +37,22 @@ export default function AddBudgetModal({ show, handleCloseAddBudgetModal }) {
       },
     },
   });
-  const styles = createStyles({
-    button: {
-      marginBottom: '0.5rem',
-    },
-  });
+  // const [value, setValue] = useState();
+  const [openAddBudgetModal, setOpenAddBudgetModal] = React.useState(false);
+  const handleOpenAddBudgetModal = () => {
+    setOpenAddBudgetModal(true);
+  };
+  const handleCloseAddBudgetModal = () => {
+    setOpenAddBudgetModal(false);
+  };
+  const handleChange = (event) => {
+    this.setState(event.target.value);
+    // setValue(event.target.value);
+  };
 
-  const nameRef = useRef();
-  const maxRef = useRef();
-  const addBudget = useBudgets();
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    addBudget({
-      name: nameRef.current.value,
-    });
-    handleCloseAddBudgetModal();
-  }
-
-  const [openAddBudgetModal, setShowAddBudgetModal] = React.useState(false);
-  const handleOpenAddBudgetModal = () => setShowAddBudgetModal(true);
-
+  const handleSubmitAddBudgetModal = (event) => {
+    event.preventDefault();
+  };
   return (
     <div>
       <ThemeProvider theme={theme}>
@@ -76,38 +61,31 @@ export default function AddBudgetModal({ show, handleCloseAddBudgetModal }) {
           variant="contained"
           sx={{ m: 0.8 }}
           color="primary"
-          show={show}
         >
           Добавить группу
         </Button>
-        <Modal
-          open={openAddBudgetModal}
-          onClose={handleCloseAddBudgetModal}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
+        <Modal open={openAddBudgetModal} onClose={handleCloseAddBudgetModal}>
           <Box sx={style}>
-            <FormGroup onSubmit={handleSubmit}>
+            <FormGroup>
               <Box
-                component="form"
                 sx={{
                   '& > :not(style)': { m: 1, width: '25ch' },
                 }}
-                noValidate
-                autoComplete="off"
               ></Box>
               <Box sx={{ minWidth: 120 }}>
-                <FormControl ref={nameRef} fullWidth>
+                <FormControl fullWidth>
                   <TextField
-                    id="outlined-basic"
                     label="Название группы"
                     variant="outlined"
                     margin="normal"
+                    value={handleChange.value}
+                    onChange={handleChange}
                   />
                 </FormControl>
               </Box>
             </FormGroup>
             <Button
+              onSubmit={handleSubmitAddBudgetModal}
               onClick={handleCloseAddBudgetModal}
               variant="contained"
               color="secondary"

@@ -67,20 +67,26 @@ const BudgetCard = ({
   };
 
   return (
-    <Card sx={{ minWidth: 275 }} className={classNames.join(' ')}>
+    <Card className={classNames.join(' ')}>
       <CardContent>
         <Typography variant="h5" component="div">
-          Тачка {name}
+          Тачка <div>{name}</div>
         </Typography>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          {<span>{currencyFormatter.format(amount)}</span>}
+        <Typography sx={{ fontSize: 14 }}>
+          <div>{<span>{currencyFormatter.format(amount)}</span>}</div>
         </Typography>
 
         <Typography variant="body2">
           {/* <ProgressBar color={'#ff7979'} width={'150px'} value={15} max={100} /> */}
         </Typography>
         <Box sx={{ width: '100%' }}>
-          <LinearProgressWithLabel value={progress} color="secondary" />
+          <LinearProgressWithLabel
+            value={getProgressBarVariant(max, amount)}
+            min={0}
+            max={max}
+            now={amount}
+            color="secondary"
+          />
         </Box>
       </CardContent>
       <CardActions>

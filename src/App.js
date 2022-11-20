@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { createTheme } from '@mui/material/styles';
+import { UNCATEGORIZED_BUDGET_ID, useBudgets } from './contexts/BudgetsContext';
 
 export const App = () => {
   const style = {
@@ -53,7 +54,12 @@ export const App = () => {
     align-content: start;
     margin-left: 10%;
   `;
-
+  // const [showAddBudgetModal, setShowAddBudgetModal] = useState(false);
+  // const [showAddExpenseModal, setShowAddExpenseModal] = useState(false);
+  // const [viewExpensesModalBudgetId, setViewExpensesModalBudgetId] = useState();
+  // const [addExpenseModalBudgetId, setAddExpenseModalBudgetId] = useState();
+  // const { budgets, getBudgetExpenses } = useBudgets();
+  console.log(localStorage.getItem('budgets', 'espenses'));
   return (
     <>
       <Container>
@@ -67,6 +73,25 @@ export const App = () => {
         <div>
           <Cards>
             <BudgetCard />
+
+            {/* {budgets.map((budget) => {
+              const amount = getBudgetExpenses(budget.id).reduce(
+                (total, expense) => total + expense.amount,
+                0
+              );
+              return (
+                <BudgetCard
+                  key={budget.id}
+                  name={budget.name}
+                  amount={amount}
+                  max={budget.max}
+                  onAddExpenseClick={() => openAddExpenseModal(budget.id)}
+                  onViewExpensesClick={() =>
+                    setViewExpensesModalBudgetId(budget.id)
+                  }
+                />
+              );
+            })} */}
           </Cards>
         </div>
       </Container>
