@@ -7,7 +7,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControl from '@mui/material/FormControl';
 import { ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function AddBudgetModal() {
   const style = {
@@ -38,8 +38,8 @@ export default function AddBudgetModal() {
     },
   });
   
-  const [openAddBudgetModal, setOpenAddBudgetModal] = React.useState(false);
-  const [budgetName, setbudgetName] = React.useState();
+  const [openAddBudgetModal, setOpenAddBudgetModal] = useState(false);
+  const [budgetName, setBudgetName] = useState('');
 
   const handleOpenAddBudgetModal = () => {
     setOpenAddBudgetModal(true);
@@ -49,13 +49,18 @@ export default function AddBudgetModal() {
   };
   const handleChange = (event) => {
     console.log(event.target.value)
-    setbudgetName(event.target.value);
+    setBudgetName(event.target.value);
 
     
   };
-const test = () => {
-  alert(budgetName);
-  handleCloseAddBudgetModal();
+const Test = () => {
+  // alert(budgetName);
+  useEffect(() => {
+    // storing input name
+    localStorage.setItem("budgetName", JSON.stringify(budgetName));
+  }, [budgetName]);
+  setBudgetName('budgetName')
+  handleCloseAddBudgetModal({budgetName: ""});
 }
   const handleSubmitAddBudgetModal = (event) => {
     event.preventDefault();
@@ -86,14 +91,15 @@ const test = () => {
                     variant="outlined"
                     margin="normal"
                     value={budgetName}
-                    onChange={handleChange}
+                    // onChange={handleChange}
+                    onChange={(e) => setBudgetName(e.target.value)}
                   />
                 </FormControl>
               </Box>
             </FormGroup>
             <Button
               onSubmit={handleSubmitAddBudgetModal}
-              onClick={test}
+              onClick={Test}
               variant="contained"
               color="secondary"
             >
