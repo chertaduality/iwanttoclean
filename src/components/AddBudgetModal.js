@@ -37,8 +37,10 @@ export default function AddBudgetModal() {
       },
     },
   });
-  // const [value, setValue] = useState();
+  
   const [openAddBudgetModal, setOpenAddBudgetModal] = React.useState(false);
+  const [budgetName, setbudgetName] = React.useState();
+
   const handleOpenAddBudgetModal = () => {
     setOpenAddBudgetModal(true);
   };
@@ -46,10 +48,15 @@ export default function AddBudgetModal() {
     setOpenAddBudgetModal(false);
   };
   const handleChange = (event) => {
-    this.setState(event.target.value);
-    // setValue(event.target.value);
-  };
+    console.log(event.target.value)
+    setbudgetName(event.target.value);
 
+    
+  };
+const test = () => {
+  alert(budgetName);
+  handleCloseAddBudgetModal();
+}
   const handleSubmitAddBudgetModal = (event) => {
     event.preventDefault();
   };
@@ -78,7 +85,7 @@ export default function AddBudgetModal() {
                     label="Название группы"
                     variant="outlined"
                     margin="normal"
-                    value={handleChange.value}
+                    value={budgetName}
                     onChange={handleChange}
                   />
                 </FormControl>
@@ -86,7 +93,7 @@ export default function AddBudgetModal() {
             </FormGroup>
             <Button
               onSubmit={handleSubmitAddBudgetModal}
-              onClick={handleCloseAddBudgetModal}
+              onClick={test}
               variant="contained"
               color="secondary"
             >
