@@ -9,6 +9,8 @@ import { ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { useState, useEffect } from 'react';
 
+import useLocalStorage from './../hooks/useLocalStorage';
+
 export default function AddBudgetModal() {
   const style = {
     position: 'absolute',
@@ -37,10 +39,12 @@ export default function AddBudgetModal() {
       },
     },
   });
-  
+
   const [openAddBudgetModal, setOpenAddBudgetModal] = useState(false);
   const [budgetName, setBudgetName] = useState('');
-
+  useEffect(() => {
+    localStorage.setItem('budgetName', JSON.stringify(budgetName));
+  }, []);
   const handleOpenAddBudgetModal = () => {
     setOpenAddBudgetModal(true);
   };
@@ -48,20 +52,14 @@ export default function AddBudgetModal() {
     setOpenAddBudgetModal(false);
   };
   const handleChange = (event) => {
-    console.log(event.target.value)
+    // console.log(event.target.value);
     setBudgetName(event.target.value);
-
-    
   };
-const Test = () => {
-  // alert(budgetName);
-  useEffect(() => {
-    // storing input name
-    localStorage.setItem("budgetName", JSON.stringify(budgetName));
-  }, [budgetName]);
-  setBudgetName('budgetName')
-  handleCloseAddBudgetModal({budgetName: ""});
-}
+
+  const AddBudget = () => {
+    setBudgetName('budgetName');
+    handleCloseAddBudgetModal({ budgetName: '' });
+  };
   const handleSubmitAddBudgetModal = (event) => {
     event.preventDefault();
   };
@@ -98,8 +96,8 @@ const Test = () => {
               </Box>
             </FormGroup>
             <Button
-              onSubmit={handleSubmitAddBudgetModal}
-              onClick={Test}
+              // onSubmit={handleSubmitAddBudgetModal}
+              onClick={AddBudget}
               variant="contained"
               color="secondary"
             >
