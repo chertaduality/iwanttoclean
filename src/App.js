@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import BudgetCard from './components/Card';
 import AddBudgetModal from './components/AddBudgetModal';
 import AddExpenseModal from './components/AddExpenseModal';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import { createTheme } from '@mui/material/styles';
-import { UNCATEGORIZED_BUDGET_ID, useBudgets } from './contexts/BudgetsContext';
+// import Box from '@mui/material/Box';
+// import Button from '@mui/material/Button';
+// import Typography from '@mui/material/Typography';
+// import Modal from '@mui/material/Modal';
+// import { createTheme } from '@mui/material/styles';
+// import { UNCATEGORIZED_BUDGET_ID, useBudgets } from './contexts/BudgetsContext';
 
 export const App = () => {
   const style = {
