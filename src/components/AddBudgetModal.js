@@ -42,6 +42,7 @@ export default function AddBudgetModal() {
 
   const [openAddBudgetModal, setOpenAddBudgetModal] = useState(false);
   const [budgetName, setBudgetName] = useState('');
+  const [value, setValue] = useState('')
 
   const handleOpenAddBudgetModal = () => {
     setOpenAddBudgetModal(true);
@@ -56,6 +57,7 @@ export default function AddBudgetModal() {
 
   const AddBudget = () => {
     setBudgetName('budgetName');
+    localStorage.setValue('budgetName', JSON.stringify())
     handleCloseAddBudgetModal({ budgetName: '' });
   };
   const handleSubmitAddBudgetModal = (event) => {
@@ -65,6 +67,7 @@ export default function AddBudgetModal() {
   useEffect(() => {
     localStorage.setItem('budgetName', JSON.stringify());
   }, []);
+  // localStorage.clear()
   return (
     <div>
       <ThemeProvider theme={theme}>
@@ -90,7 +93,8 @@ export default function AddBudgetModal() {
                     label="Название группы"
                     variant="outlined"
                     margin="normal"
-                    // value={value}
+                    placeholder='Введите название'
+                    value={setBudgetName.value}
                     // onChange={handleChange}
                     onChange={(e) => setBudgetName(e.target.value)}
                   />
