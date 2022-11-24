@@ -9,8 +9,6 @@ import { ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { useState, useEffect } from 'react';
 
-import useLocalStorage from './../hooks/useLocalStorage';
-
 export default function AddBudgetModal() {
   const style = {
     position: 'absolute',
@@ -42,7 +40,7 @@ export default function AddBudgetModal() {
 
   const [openAddBudgetModal, setOpenAddBudgetModal] = useState(false);
   const [budgetName, setBudgetName] = useState('');
-  // const [value, setValue] = useState('');
+  const [value, setValue] = useState('')
 
   const handleOpenAddBudgetModal = () => {
     setOpenAddBudgetModal(true);
@@ -53,22 +51,18 @@ export default function AddBudgetModal() {
   const handleChange = (event) => {
     console.log(event.target.value);
     setBudgetName(event.target.value);
+    setValue(event.target.value);
+    
   };
 
   const AddBudget = () => {
-    setBudgetName();
-    //
+    setValue('budgetName')
     handleCloseAddBudgetModal({ budgetName: '' });
-  };
-  const handleSubmitAddBudgetModal = (event) => {
-    localStorage.setValue('budgetName', JSON.stringify());
-    event.preventDefault();
+    localStorage.setItem('budgetName', value)
+    console.log('test', value)
   };
 
-  useEffect(() => {
-    localStorage.setItem('budgetName', JSON.stringify());
-  }, []);
-  // localStorage.clear()
+
   return (
     <div>
       <ThemeProvider theme={theme}>
@@ -94,17 +88,15 @@ export default function AddBudgetModal() {
                     label="Название группы"
                     variant="outlined"
                     margin="normal"
-                    placeholder="Введите название"
-                    value={() => AddBudget()}
-                    // onChange={handleChange}
-                    onChange={(e) => handleChange(e.target.value)}
+                    placeholder='Введите название'
+                    value={AddBudget.value}
+                    onChange={handleChange}
                   />
                 </FormControl>
               </Box>
             </FormGroup>
             <Button
-              onSubmit={handleSubmitAddBudgetModal}
-              onClick={AddBudget}
+              onClick={() =>  AddBudget()}
               variant="contained"
               color="secondary"
             >
