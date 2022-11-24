@@ -49,7 +49,7 @@ export default function AddBudgetModal() {
     setOpenAddBudgetModal(false);
   };
   const handleChange = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     setBudgetName(event.target.value);
     setValue(event.target.value);
     
@@ -59,7 +59,7 @@ export default function AddBudgetModal() {
     setValue('budgetName')
     handleCloseAddBudgetModal({ budgetName: '' });
     localStorage.setItem('budgetName', value)
-    console.log('test', value)
+    // console.log('test', value)
   };
 
 

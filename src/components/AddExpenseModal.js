@@ -9,6 +9,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { useState } from 'react';
 
 export default function AddExpenseModal() {
   const style = {
@@ -26,11 +27,35 @@ export default function AddExpenseModal() {
   const [openAddExpenseModal, setShowAddExpenseModal] = React.useState(false);
   const handleOpenAddExpenseModal = () => setShowAddExpenseModal(true);
   const handleCloseAddExpenseModal = () => setShowAddExpenseModal(false);
-  const [prio, setPrio] = React.useState('');
+  const [prio, setPrio] = useState('');
+  const [expense, setExpense] = useState('');
+  const [price, setPrice] = useState('');
+  const [value, setValue] = useState('')
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setPrio(event.target.value);
+
+
+  const handleChangeExpense = (event) => {
+    setExpense(event.target.expense)
+    setValue(event.target.expense);
+    
+    
   };
+
+  const handleChangePrice = (event) => {
+    setPrice(event.target.price);
+    setValue(event.target.price);
+    
+  };
+
+  const handleChangePrio = (event) => {
+    setPrio(event.target.prio)
+    setValue(event.target.prio);
+    console.log(event.target.prio)
+    
+  };
+
+
+
 
   return (
     <div>
@@ -46,8 +71,6 @@ export default function AddExpenseModal() {
       <Modal
         open={openAddExpenseModal}
         onClose={handleCloseAddExpenseModal}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
           <FormGroup>
@@ -66,16 +89,21 @@ export default function AddExpenseModal() {
                   label="Название хотелки"
                   variant="outlined"
                   margin="normal"
+                  value={expense}
+                  onChange={handleChangeExpense}
                 />
                 <TextField
                   id="outlined-basic"
                   label="Примерная стоимость"
                   variant="outlined"
                   margin="normal"
+                  value={value}
+                  onChange={handleChangePrice}
                 />
               </FormControl>
               <FormControl fullWidth margin="normal">
-                <InputLabel id="demo-simple-select-label">
+                <InputLabel                  
+               >
                   Выберите приоритет
                 </InputLabel>
                 <Select
@@ -83,8 +111,9 @@ export default function AddExpenseModal() {
                   id="demo-simple-select"
                   value={prio}
                   label="prio"
-                  onChange={handleChange}
-                >
+                  // value={value}
+                  onChange={handleChangePrio}>
+                
                   <MenuItem value={'high'}>Высокий</MenuItem>
                   <MenuItem value={'medium'}>Средний</MenuItem>
                   <MenuItem value={'low'}>Низкий</MenuItem>
