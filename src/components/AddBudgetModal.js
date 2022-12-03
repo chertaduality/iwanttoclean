@@ -39,8 +39,8 @@ export default function AddBudgetModal() {
   });
 
   const [openAddBudgetModal, setOpenAddBudgetModal] = useState(false);
-  const [budgetName, setBudgetName] = useState('');
-  const [value, setValue] = useState('')
+  const [budgetName, setBudgetName] = useState('budgetName', []);
+  const [value, setValue] = useState('');
 
   const handleOpenAddBudgetModal = () => {
     setOpenAddBudgetModal(true);
@@ -52,16 +52,14 @@ export default function AddBudgetModal() {
     // console.log(event.target.value);
     setBudgetName(event.target.value);
     setValue(event.target.value);
-    
   };
 
   const AddBudget = () => {
-    setValue('budgetName')
+    setValue('budgetName');
     handleCloseAddBudgetModal({ budgetName: '' });
-    localStorage.setItem('budgetName', value)
+    localStorage.setItem('budgetName', value);
     // console.log('test', value)
   };
-
 
   return (
     <div>
@@ -88,7 +86,7 @@ export default function AddBudgetModal() {
                     label="Название группы"
                     variant="outlined"
                     margin="normal"
-                    placeholder='Введите название'
+                    placeholder="Введите название"
                     value={AddBudget.value}
                     onChange={handleChange}
                   />
@@ -96,7 +94,7 @@ export default function AddBudgetModal() {
               </Box>
             </FormGroup>
             <Button
-              onClick={() =>  AddBudget()}
+              onClick={() => AddBudget()}
               variant="contained"
               color="secondary"
             >

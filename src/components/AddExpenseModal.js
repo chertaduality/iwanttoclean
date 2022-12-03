@@ -24,38 +24,38 @@ export default function AddExpenseModal() {
     p: 4,
   };
 
-  const [openAddExpenseModal, setShowAddExpenseModal] = React.useState(false);
-  const handleOpenAddExpenseModal = () => setShowAddExpenseModal(true);
-  const handleCloseAddExpenseModal = () => setShowAddExpenseModal(false);
+  const [openAddExpenseModal, setOpenAddExpenseModal] = useState(false);
+  const handleOpenAddExpenseModal = () => setOpenAddExpenseModal(true);
+  const handleCloseAddExpenseModal = () => setOpenAddExpenseModal(false);
   const [prio, setPrio] = useState('');
   const [expense, setExpense] = useState('');
   const [price, setPrice] = useState('');
-  const [value, setValue] = useState('')
-
-
+  const [value, setValue] = useState('');
 
   const handleChangeExpense = (event) => {
-    setExpense(event.target.expense)
-    setValue(event.target.expense);
-    
-    
+    setExpense(event.target.value);
+    setValue(event.target.value);
+    // console.log(event.target.expense);
   };
 
   const handleChangePrice = (event) => {
-    setPrice(event.target.price);
-    setValue(event.target.price);
-    
+    setPrice(event.target.value);
+    setValue(event.target.value);
+    console.log(setPrice);
   };
 
   const handleChangePrio = (event) => {
-    setPrio(event.target.prio)
-    setValue(event.target.prio);
-    console.log(event.target.prio)
-    
+    setPrio(event.target.value);
+    setValue(event.target.value);
+    // console.log(event.target.prio);
   };
 
-
-
+  const AddExpense = ({ expense, price, prio }) => {
+    setValue('expense');
+    handleCloseAddExpenseModal({ expense: '' });
+    localStorage.setItem('expense');
+    // console.log('test', value)
+  };
 
   return (
     <div>
@@ -68,10 +68,7 @@ export default function AddExpenseModal() {
       >
         Добавить хотелку
       </Button>
-      <Modal
-        open={openAddExpenseModal}
-        onClose={handleCloseAddExpenseModal}
-      >
+      <Modal open={openAddExpenseModal} onClose={handleCloseAddExpenseModal}>
         <Box sx={style}>
           <FormGroup>
             <Box
@@ -89,7 +86,7 @@ export default function AddExpenseModal() {
                   label="Название хотелки"
                   variant="outlined"
                   margin="normal"
-                  value={expense}
+                  value={AddExpense.expense}
                   onChange={handleChangeExpense}
                 />
                 <TextField
@@ -97,23 +94,20 @@ export default function AddExpenseModal() {
                   label="Примерная стоимость"
                   variant="outlined"
                   margin="normal"
-                  value={value}
+                  value={AddExpense.price}
                   onChange={handleChangePrice}
                 />
               </FormControl>
               <FormControl fullWidth margin="normal">
-                <InputLabel                  
-               >
-                  Выберите приоритет
-                </InputLabel>
+                <InputLabel>Выберите приоритет</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={prio}
+                  value={AddExpense.prio}
                   label="prio"
                   // value={value}
-                  onChange={handleChangePrio}>
-                
+                  onChange={handleChangePrio}
+                >
                   <MenuItem value={'high'}>Высокий</MenuItem>
                   <MenuItem value={'medium'}>Средний</MenuItem>
                   <MenuItem value={'low'}>Низкий</MenuItem>
@@ -135,7 +129,11 @@ export default function AddExpenseModal() {
       </FormControl> */}
             </Box>
           </FormGroup>
-          <Button onClick={handleCloseAddExpenseModal} variant="contained">
+          <Button
+            onClick={() => AddExpense()}
+            variant="contained"
+            color="secondary"
+          >
             Добавить
           </Button>
         </Box>
